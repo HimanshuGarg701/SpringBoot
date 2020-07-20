@@ -1,4 +1,4 @@
-package Model;
+package com.example.Springbootpractice.demo.Model;
 
 import java.util.UUID;
 

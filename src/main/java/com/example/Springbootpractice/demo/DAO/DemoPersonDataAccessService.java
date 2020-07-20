@@ -4,6 +4,7 @@ import com.example.Springbootpractice.demo.Model.Person;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Repository("personDao")
@@ -18,8 +19,13 @@ public class DemoPersonDataAccessService implements PersonDao{
             dataBase.add(new Person(ID, person.getName()));
             return 1;
         }catch(Exception e){
-            //Failed to add person to database
+            //Failed to add person to database list
             return -1;
         }
+    }
+
+    @Override
+    public List<Person> getPerson() {
+        return dataBase;
     }
 }

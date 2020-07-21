@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository("personDao")
@@ -27,5 +28,33 @@ public class DemoPersonDataAccessService implements PersonDao{
     @Override
     public List<Person> getPerson() {
         return dataBase;
+    }
+
+    @Override
+    public Optional<Person> getPerson(UUID id) {
+        return dataBase.stream()
+                .filter(person -> person.getId().equals(id))
+                .findFirst();
+    }
+
+    @Override
+    public int updatePerson(UUID id, Person person) {
+        Optional<Person> personToUpdate = getPerson(id);
+        if(personToUpdate.isEmpty()){
+            return 0;
+        }
+        int indexOfPersonToUpdate = dataBase.indexOf(personToUpdate.get());
+        dataBase.set(indexOfPersonToUpdate, person);
+        return 1;
+    }
+
+    @Override
+    public int deletePerson(UUID id) {
+        Optional<Person> personToDelete = getPerson(id);
+        if(personToDelete.isEmpty()){
+            return 0;
+        }
+        dataBase.remove(personToDelete.get());
+        return 1;
     }
 }
